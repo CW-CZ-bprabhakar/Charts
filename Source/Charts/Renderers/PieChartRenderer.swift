@@ -126,6 +126,11 @@ open class PieChartRenderer: DataRenderer
         let drawInnerArc = chart.drawHoleEnabled && !chart.drawSlicesUnderHoleEnabled
         let userInnerRadius = drawInnerArc ? radius * chart.holeRadiusPercent : 0.0
         
+        //// Shadow Declarations
+        let shadow = UIColor.black.withAlphaComponent(0.1)
+        let shadowOffset = CGSize(width: 0, height: 3)
+        let shadowBlurRadius: CGFloat = 10
+        
         var visibleAngleCount = 0
         for j in 0 ..< entryCount
         {
@@ -245,7 +250,8 @@ open class PieChartRenderer: DataRenderer
                     }
                     
                     path.closeSubpath()
-                    
+                    context.setShadow(offset: shadowOffset, blur: shadowBlurRadius,  color: (shadow as UIColor).cgColor)
+
                     context.beginPath()
                     context.addPath(path)
                     context.fillPath(using: .evenOdd)
